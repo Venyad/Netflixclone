@@ -4,12 +4,13 @@
   "description": "This Netflix Clone is a feature-rich movie streaming application built using React.js, Node.js, Express.js, and MongoDB. It provides users with a seamless experience to explore, search, and watch movie trailers while ensuring secure authentication and a responsive design. The project replicates the core functionalities of Netflix, delivering a smooth and visually appealing interface.",
   "main": "backend/server.js",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon backend/server.js",
+    "dev": "NODE_ENV=development node backend/server.js",
 		"start": "NODE_ENV=production node backend/server.js",
 		"build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],
   "author": "",
+  "type": "module",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.8.3",
