@@ -1,11 +1,9 @@
 import React from 'react'
-import '../index.css';
 
 const HomePage = () => {
   return (
-    <div className="hero-bg"
-    >
-      Hello world!
+    <div className='hero-bg h-screen'>
+      Home
     </div>
   )
 }
