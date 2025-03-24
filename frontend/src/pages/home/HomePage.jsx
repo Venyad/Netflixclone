@@ -4,7 +4,7 @@ import AuthScreen from './AuthScreen'
 
 
 const HomePage = () => {
-  const user = true;
+  const user = false;
   return (
     <div >
      {user ? <HomeScreen/> : <AuthScreen/>}
