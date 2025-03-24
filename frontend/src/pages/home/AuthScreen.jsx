@@ -1,22 +1,22 @@
-import React,{ useState }  from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { ChevronRight } from "lucide-react";
 
 
 
 const AuthScreen = () => {
-  const [email, setEmail] = useState("");
-  return (
-    
-    <div className='hero-bg relative'>
-      {/* Navbar */}
+	const [email, setEmail] = useState("");
+	return (
+
+		<div className='hero-bg relative'>
+			{/* Navbar */}
 			<header className='max-w-6xl mx-auto flex items-center justify-between p-4 pb-10'>
 				<img src='/netflix-logo.png' alt='Netflix Logo' className='w-32 md:w-52' />
 				<Link to={"/login"} className='text-white bg-red-600 py-1 px-2 rounded'>
 					Sign In
 				</Link>
 			</header>
-      {/* hero section */}
+			{/* hero section */}
 			<div className='flex flex-col items-center justify-center text-center py-40 text-white max-w-6xl mx-auto'>
 				<h1 className='text-4xl md:text-6xl font-bold mb-4'>Unlimited movies, TV shows, and more</h1>
 				<p className='text-lg mb-4'>Watch anywhere. Cancel anytime.</p>
@@ -27,8 +27,8 @@ const AuthScreen = () => {
 						type='email'
 						placeholder='Email address'
 						className='p-2 rounded flex-1 bg-black/80 border border-gray-700'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
 					/>
 					<button className='bg-red-600 text-xl lg:text-2xl px-2 lg:px-6 py-1 md:py-2 rounded flex justify-center items-center'>
 						Get Started
@@ -36,8 +36,8 @@ const AuthScreen = () => {
 					</button>
 				</form>
 			</div>
-      <div className='h-2 w-full bg-[#232323]' aria-hidden='true' />
-      <div className='py-10 bg-black text-white'>
+			<div className='h-2 w-full bg-[#232323]' aria-hidden='true' />
+			<div className='py-10 bg-black text-white'>
 				<div className='flex max-w-6xl mx-auto items-center justify-center md:flex-row flex-col px-4 md:px-2'>
 					{/* left side */}
 					<div className='flex-1 text-center md:text-left'>
@@ -97,9 +97,9 @@ const AuthScreen = () => {
 						</p>
 					</div>
 				</div>
-				</div>
-				<div className='h-2 w-full bg-[#232323]' aria-hidden='true' />
-				<div className='py-10 bg-black text-white'>
+			</div>
+			<div className='h-2 w-full bg-[#232323]' aria-hidden='true' />
+			<div className='py-10 bg-black text-white'>
 				<div className='flex max-w-6xl mx-auto items-center justify-center md:flex-row flex-col px-4 md:px-2'>
 					{/* left side */}
 					<div className='flex-1 text-center md:text-left'>
@@ -128,11 +128,32 @@ const AuthScreen = () => {
 			</div>
 
 			<div className='h-2 w-full bg-[#232323]' aria-hidden='true' />
+			<div className='py-10 bg-black text-white'>
+				<div
+					className='flex max-w-6xl mx-auto items-center justify-center flex-col-reverse md:flex-row
+           px-4 md:px-2
+        '
+				>
+					{/* left */}
+					<div className='flex-1 relative'>
+						<img src='/kids.png' alt='Enjoy on your TV' className='mt-4' />
+					</div>
+					{/* right */}
+					<div className='flex-1 text-center md:text-left'>
+						<h2 className='text-4xl md:text-5xl font-extrabold mb-4'>Create profiles for kids</h2>
+						<p className='text-lg md:text-xl'>
+							Send kids on adventures with their favorite characters in a space made just for them—free
+							with your membership.
+						</p>
+					</div>
+				</div>
+			</div>
 
 
 
-    </div>
-  )
+
+		</div>
+	)
 }
 
 export default AuthScreen;
