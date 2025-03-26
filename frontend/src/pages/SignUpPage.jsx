@@ -2,8 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
 
+
 const SignUpPage = () => {
-  const [email, setEmail] = useState("");
+  const {searchParams} = new URL(document.location)
+  const emailvalue = searchParams.get("email")
+  const [email, setEmail] = useState(emailvalue || "");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
