@@ -21,7 +21,7 @@
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.483.0",
-    "mongoose": "^8.12.1",
+    "mongoose": "^8.1.1",
     "postcss-cli": "^11.0.1",
     "react-hot-toast": "^2.5.2",
     "react-player": "^2.16.0",

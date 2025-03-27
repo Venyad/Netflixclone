@@ -10,10 +10,11 @@ const SignUpPage = () => {
   const [email, setEmail] = useState(emailvalue || "");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { signup } = useAuthStore();
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    console.log(email, username, password);
+    signup({ email, username, password });
 
   }
   return (
