@@ -1,10 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
+import { useAuthStore } from "../store/authUser";
 
 
 const SignUpPage = () => {
-  const {searchParams} = new URL(document.location)
+  const { searchParams } = new URL(document.location)
   const emailvalue = searchParams.get("email")
   const [email, setEmail] = useState(emailvalue || "");
   const [username, setUsername] = useState("");
@@ -13,6 +14,7 @@ const SignUpPage = () => {
   const handleSignUp = (e) => {
     e.preventDefault();
     console.log(email, username, password);
+
   }
   return (
     <div className='h-screen w-full hero-bg'>
