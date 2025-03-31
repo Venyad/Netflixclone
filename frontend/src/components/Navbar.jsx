@@ -8,6 +8,17 @@ const Navbar = () => {
                 <Link to="/">
                     <img src='/netflix-logo.png' alt='Netflix Logo' className='w-32 sm:w-40' />
                 </Link>
+                <div className='hidden sm:flex gap-2 items-center'>
+                    <Link to="/" className='hover:underline'>
+                        Movies
+                    </Link>
+                    <Link to="/" className='hover:underline'>
+                        Tv Shows
+                    </Link>
+                    <Link to="/history" className='hover:underline'>
+                        Search History
+                    </Link>
+                </div>
             </div>
 
         </header>
