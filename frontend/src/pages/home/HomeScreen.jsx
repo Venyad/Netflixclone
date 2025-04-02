@@ -1,7 +1,13 @@
 import React from 'react'
 import Navbar from '../../components/Navbar.jsx'
+import useGetTrendingContent from "../../hooks/useGetTrendingContent.jsx";
+import { useContentStore } from "../../store/content.js";
+
 
 const HomeScreen = () => {
+  //const { trendingContent } = useGetTrendingContent();
+  //const { contentType } = useContentStore();
+  //const [imgLoading, setImgLoading] = useState(true);
   return (
     <>
       <div className='relative h-screen text-white bg-black'>
