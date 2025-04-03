@@ -7,6 +7,22 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const MovieSlider = ({ category }) => {
   const { contentType } = useContentStore();
+  const [content, setContent] = useState([]);
+	const [showArrows, setShowArrows] = useState(false);
+  const sliderRef = useRef(null);
+
+	const formattedCategoryName =
+		category.replaceAll("_", " ")[0].toUpperCase() + category.replaceAll("_", " ").slice(1);
+	const formattedContentType = contentType === "movie" ? "Movies" : "TV Shows";
+  useEffect(() => {
+		const getContent = async () => {
+			const res = await axios.get(`/api/v1/${contentType}/${category}`);
+			setContent(res.data.content);
+		};
+
+		getContent();
+	}, [contentType, category]);
+
   return (
     <div>
       Movie Slider
