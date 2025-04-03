@@ -17,12 +17,34 @@ const MovieSlider = ({ category }) => {
   const formattedContentType = contentType === "movie" ? "Movies" : "TV Shows";
   useEffect(() => {
     const getContent = async () => {
-      const res = await axios.get(`/api/v1/${contentType}/${category}`);
-      setContent(res.data.content);
+      try {
+        const res = await axios.get(`/api/v1/${contentType}/${category}`);
+        console.log("✅ API success:", res.data);
+  
+        const movies = res.data?.similar;
+  
+        if (Array.isArray(movies)) {
+          setContent(movies);
+        } else {
+          console.warn("⚠️ Expected 'similar' to be an array, got:", movies);
+          setContent([]);
+        }
+      } catch (error) {
+        console.error("Error fetching content:", error);
+        setContent([]);
+      }
     };
 
     getContent();
   }, [contentType, category]);
+  const scrollLeft = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({ left: -sliderRef.current.offsetWidth, behavior: "smooth" });
+    }
+  };
+  const scrollRight = () => {
+    sliderRef.current.scrollBy({ left: sliderRef.current.offsetWidth, behavior: "smooth" });
+  };
 
   return (
     <div className='bg-black text-white relative px-5 md:px-20'
@@ -32,7 +54,7 @@ const MovieSlider = ({ category }) => {
         {formattedCategoryName} {formattedContentType}
       </h2>
       <div className='flex space-x-4 overflow-x-scroll scrollbar-hide' ref={sliderRef}>
-        {content.map((item) => (
+        {content?.map((item) => (
           <Link to={`/watch/${item.id}`} className='min-w-[250px] relative group' key={item.id}>
             <div className='rounded-lg overflow-hidden'>
               <img
@@ -71,4 +93,4 @@ const MovieSlider = ({ category }) => {
   )
 }
 
-export default MovieSlider
+export default MovieSlider;
