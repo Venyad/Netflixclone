@@ -1,12 +1,12 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
-import { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom'
+import { useState, useEffect, useRef } from 'react';
 import { useContentStore } from "../store/content.js";
 import Navbar from '../components/Navbar.jsx';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import ReactPlayer from "react-player";
 import axios from 'axios';
-import { ORIGINAL_IMG_BASE_URL, SMALL_IMG_BASE_URL } from "../utils/constants";
+import { ORIGINAL_IMG_BASE_URL, SMALL_IMG_BASE_URL } from "../utils/constants.js";
 import { formatReleaseDate } from "../utils/dateFunction";
 
 
@@ -20,6 +20,7 @@ const WatchPage = () => {
     const [content, setContent] = useState({});
     const [similarContent, setSimilarContent] = useState([]);
     const { contentType } = useContentStore();
+    const sliderRef = useRef(null);
 
     useEffect(() => {
         const getTrailers = async () => {
@@ -71,6 +72,13 @@ const WatchPage = () => {
     const handlePrev = () => {
         if (currentTrailerIdx > 0) setCurrentTrailerIdx(currentTrailerIdx - 1);
     };
+    const scrollLeft = () => {
+        if (sliderRef.current) sliderRef.current.scrollBy({ left: -sliderRef.current.offsetWidth, behavior: "smooth" });
+    };
+    const scrollRight = () => {
+        if (sliderRef.current) sliderRef.current.scrollBy({ left: sliderRef.current.offsetWidth, behavior: "smooth" });
+    };
+
     return (
         <div className='bg-black min-h-screen text-white'>
             <div className='mx-auto container px-4 py-8 h-full'>
@@ -104,7 +112,8 @@ const WatchPage = () => {
                             width={"100%"}
                             height={"70vh"}
                             className='mx-auto overflow-hidden rounded-lg'
-                            url={`https://www.youtube.com/watch?v=${trailers[currentTrailerIdx].key}`}
+                            url={`https://www.youtube.com/embed/${trailers[currentTrailerIdx].key}`}
+
                         />
                     )}
 
@@ -116,28 +125,62 @@ const WatchPage = () => {
                     )}
                 </div>
                 <div
-					className='flex flex-col md:flex-row items-center justify-between gap-20 
+                    className='flex flex-col md:flex-row items-center justify-between gap-20 
 				max-w-6xl mx-auto'
-				>
-					<div className='mb-4 md:mb-0'>
-						<h2 className='text-5xl font-bold text-balance'>{content?.title || content?.name}</h2>
+                >
+                    <div className='mb-4 md:mb-0'>
+                        <h2 className='text-5xl font-bold text-balance'>{content?.title || content?.name}</h2>
 
-						<p className='mt-2 text-lg'>
-							{formatReleaseDate(content?.release_date || content?.first_air_date)} |{" "}
-							{content?.adult ? (
-								<span className='text-red-600'>18+</span>
-							) : (
-								<span className='text-green-600'>PG-13</span>
-							)}{" "}
-						</p>
-						<p className='mt-4 text-lg'>{content?.overview}</p>
-					</div>
-					<img
-						src={ORIGINAL_IMG_BASE_URL + content?.poster_path}
-						alt='Poster image'
-						className='max-h-[600px] rounded-md'
-					/>
-				</div>
+                        <p className='mt-2 text-lg'>
+                            {formatReleaseDate(content?.release_date || content?.first_air_date)} |{" "}
+                            {content?.adult ? (
+                                <span className='text-red-600'>18+</span>
+                            ) : (
+                                <span className='text-green-600'>PG-13</span>
+                            )}{" "}
+                        </p>
+                        <p className='mt-4 text-lg'>{content?.overview}</p>
+                    </div>
+                    <img
+                        src={ORIGINAL_IMG_BASE_URL + content?.poster_path}
+                        alt='Poster image'
+                        className='max-h-[600px] rounded-md'
+                    />
+                </div>
+                {similarContent.length > 0 && (
+                    <div className='mt-12 max-w-5xl mx-auto relative'>
+                        <h3 className='text-3xl font-bold mb-4'>Similar Movies/Tv Show</h3>
+
+                        <div className='flex overflow-x-scroll scrollbar-hide gap-4 pb-4 group' ref={sliderRef}>
+                            {similarContent.map((content) => {
+                                if (content.poster_path === null) return null;
+                                return (
+                                    <Link key={content.id} to={`/watch/${content.id}`} className='w-52 flex-none'>
+                                        <img
+                                            src={SMALL_IMG_BASE_URL + content.poster_path}
+                                            alt='Poster path'
+                                            className='w-full h-auto rounded-md'
+                                        />
+                                        <h4 className='mt-2 text-lg font-semibold'>{content.title || content.name}</h4>
+                                    </Link>
+                                );
+                            })}
+
+                            <ChevronRight
+                                className='absolute top-1/2 -translate-y-1/2 right-2 w-8 h-8
+										opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer
+										 bg-red-600 text-white rounded-full'
+                                onClick={scrollRight}
+                            />
+                            <ChevronLeft
+                                className='absolute top-1/2 -translate-y-1/2 left-2 w-8 h-8 opacity-0 
+								group-hover:opacity-100 transition-all duration-300 cursor-pointer bg-red-600 
+								text-white rounded-full'
+                                onClick={scrollLeft}
+                            />
+                        </div>
+                    </div>
+                )}
             </div>
 
         </div>
