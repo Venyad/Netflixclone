@@ -1,7 +1,9 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useContentStore } from "../store/content.js";
+import Navbar from '../components/Navbar.jsx';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const WatchPage = () => {
     const { id } = useParams();
@@ -13,52 +15,75 @@ const WatchPage = () => {
     const { contentType } = useContentStore();
 
     useEffect(() => {
-		const getTrailers = async () => {
-			try {
-				const res = await axios.get(`/api/v1/${contentType}/${id}/trailers`);
-				setTrailers(res.data.trailers);
-			} catch (error) {
-				if (error.message.includes("404")) {
-					setTrailers([]);
-				}
-			}
-		};
+        const getTrailers = async () => {
+            try {
+                const res = await axios.get(`/api/v1/${contentType}/${id}/trailers`);
+                setTrailers(res.data.trailers);
+            } catch (error) {
+                if (error.message.includes("404")) {
+                    setTrailers([]);
+                }
+            }
+        };
 
-		getTrailers();
-	}, [contentType, id]);
+        getTrailers();
+    }, [contentType, id]);
     useEffect(() => {
-		const getSimilarContent = async () => {
-			try {
-				const res = await axios.get(`/api/v1/${contentType}/${id}/similar`);
-				setSimilarContent(res.data.similar);
-			} catch (error) {
-				if (error.message.includes("404")) {
-					setSimilarContent([]);
-				}
-			}
-		};
+        const getSimilarContent = async () => {
+            try {
+                const res = await axios.get(`/api/v1/${contentType}/${id}/similar`);
+                setSimilarContent(res.data.similar);
+            } catch (error) {
+                if (error.message.includes("404")) {
+                    setSimilarContent([]);
+                }
+            }
+        };
 
-		getSimilarContent();
-	}, [contentType, id]);
+        getSimilarContent();
+    }, [contentType, id]);
     useEffect(() => {
-		const getContentDetails = async () => {
-			try {
-				const res = await axios.get(`/api/v1/${contentType}/${id}/details`);
-				setContent(res.data.content);
-			} catch (error) {
-				if (error.message.includes("404")) {
-					setContent(null);
-				}
-			} finally {
-				setLoading(false);
-			}
-		};
+        const getContentDetails = async () => {
+            try {
+                const res = await axios.get(`/api/v1/${contentType}/${id}/details`);
+                setContent(res.data.content);
+            } catch (error) {
+                if (error.message.includes("404")) {
+                    setContent(null);
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
 
-		getContentDetails();
-	}, [contentType, id]);
+        getContentDetails();
+    }, [contentType, id]);
     return (
-        <div>
-            Watch
+        <div className='bg-black min-h-screen text-white'>
+            <div className='mx-auto container px-4 py-8 h-full'>
+                <Navbar />
+                {trailers.length > 0 && (
+                    <div className='flex justify-between items-center mb-4 '>
+                        <button className={`
+							bg-gray-500/70 hover:bg-gray-500 text-white py-2 px-4 rounded ${currentTrailerIdx === 0 ? "opacity-50 cursor-not-allowed " : ""
+                            }}
+							`}
+                            disabled={currentTrailerIdx === 0}
+                        >
+                            <ChevronLeft size={24} />
+                        </button>
+                        <button className={`
+							bg-gray-500/70 hover:bg-gray-500 text-white py-2 px-4 rounded ${currentTrailerIdx === 0 ? "opacity-50 cursor-not-allowed " : ""
+                            }}
+							`}
+                            disabled={currentTrailerIdx === 0}
+                        >
+                            <ChevronRight size={24} />
+                        </button>
+                    </div>
+                )}
+            </div>
+
         </div>
     )
 }
