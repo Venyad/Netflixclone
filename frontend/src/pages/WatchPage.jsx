@@ -6,6 +6,10 @@ import Navbar from '../components/Navbar.jsx';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import ReactPlayer from "react-player";
 import axios from 'axios';
+import { ORIGINAL_IMG_BASE_URL, SMALL_IMG_BASE_URL } from "../utils/constants";
+import { formatReleaseDate } from "../utils/dateFunction";
+
+
 
 
 const WatchPage = () => {
@@ -111,7 +115,29 @@ const WatchPage = () => {
                         </h2>
                     )}
                 </div>
-                
+                <div
+					className='flex flex-col md:flex-row items-center justify-between gap-20 
+				max-w-6xl mx-auto'
+				>
+					<div className='mb-4 md:mb-0'>
+						<h2 className='text-5xl font-bold text-balance'>{content?.title || content?.name}</h2>
+
+						<p className='mt-2 text-lg'>
+							{formatReleaseDate(content?.release_date || content?.first_air_date)} |{" "}
+							{content?.adult ? (
+								<span className='text-red-600'>18+</span>
+							) : (
+								<span className='text-green-600'>PG-13</span>
+							)}{" "}
+						</p>
+						<p className='mt-4 text-lg'>{content?.overview}</p>
+					</div>
+					<img
+						src={ORIGINAL_IMG_BASE_URL + content?.poster_path}
+						alt='Poster image'
+						className='max-h-[600px] rounded-md'
+					/>
+				</div>
             </div>
 
         </div>
