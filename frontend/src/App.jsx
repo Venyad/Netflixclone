@@ -10,6 +10,7 @@ import { Navigate } from "react-router-dom";
 import { Loader } from "lucide-react";
 import WatchPage from "./pages/WatchPage.jsx";
 import SearchPage from "./pages/SearchPage.jsx";
+import SearchHistoryPage from "./pages/SearchHistoryPage.jsx";
 function App() {
    const {user,isCheckingAuth,authCheck} = useAuthStore();
    useEffect(() => {
@@ -31,6 +32,8 @@ function App() {
          <Route path="/login" element={!user ? <LoginPage /> : <Navigate to={"/"} />} />
          <Route path="/watch/:id" element={user ? <WatchPage /> : <Navigate to={"/login"} />}/>
          <Route path='/search' element={user ? <SearchPage /> : <Navigate to={"/login"} />} />
+         <Route path='/history' element={user ? <SearchHistoryPage /> : <Navigate to={"/login"} />} />
+
       </Routes><Footer /><Toaster /></>
    );
 }
