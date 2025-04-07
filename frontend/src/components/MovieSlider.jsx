@@ -19,7 +19,6 @@ const MovieSlider = ({ category }) => {
     const getContent = async () => {
       try {
         const res = await axios.get(`/api/v1/${contentType}/${category}`);
-        console.log("✅ API success:", res.data);
   
         const movies = res.data?.similar;
   
